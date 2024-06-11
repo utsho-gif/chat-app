@@ -1,23 +1,24 @@
-"use client";
+'use client';
 
-// import axios from "axios";
 // import { signIn, useSession } from 'next-auth/react';
-import { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { BsGithub, BsGoogle } from "react-icons/bs";
+import axios from 'axios';
+import { useCallback, useState } from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { BsGithub, BsGoogle } from 'react-icons/bs';
 // import { useRouter } from "next/navigation";
 
-import Button from "@/app/components/Button";
-import Input from "../../components/inputs/input";
-import AuthSocialButton from "./AuthSocialButton";
+import Button from '@/app/components/Button';
+import Input from '../../components/inputs/input';
+import AuthSocialButton from './AuthSocialButton';
+import toast from 'react-hot-toast';
 // import { toast } from "react-hot-toast";
 
-type Variant = "LOGIN" | "REGISTER";
+type Variant = 'LOGIN' | 'REGISTER';
 
 const AuthForm = () => {
   //   const session = useSession();
   //   const router = useRouter();
-  const [variant, setVariant] = useState<Variant>("LOGIN");
+  const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
 
   //   useEffect(() => {
@@ -27,10 +28,10 @@ const AuthForm = () => {
   //   }, [session?.status, router]);
 
   const toggleVariant: any = useCallback(() => {
-    if (variant === "LOGIN") {
-      setVariant("REGISTER");
+    if (variant === 'LOGIN') {
+      setVariant('REGISTER');
     } else {
-      setVariant("LOGIN");
+      setVariant('LOGIN');
     }
   }, [variant]);
 
@@ -40,34 +41,35 @@ const AuthForm = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
+      name: '',
+      email: '',
+      password: '',
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    if (variant === "REGISTER") {
-      //   axios.post('/api/register', data)
-      //   .then(() => signIn('credentials', {
-      //     ...data,
-      //     redirect: false,
-      //   }))
-      //   .then((callback) => {
-      //     if (callback?.error) {
-      //       toast.error('Invalid credentials!');
-      //     }
-      //     if (callback?.ok) {
-      //       router.push('/conversations')
-      //     }
-      //   })
-      //   .catch(() => toast.error('Something went wrong!'))
+    if (variant === 'REGISTER') {
+      axios
+        .post('/api/register', data)
+        //   .then(() => signIn('credentials', {
+        //     ...data,
+        //     redirect: false,
+        //   }))
+        //   .then((callback) => {
+        //     if (callback?.error) {
+        //       toast.error('Invalid credentials!');
+        //     }
+        //     if (callback?.ok) {
+        //       router.push('/conversations')
+        //     }
+        //   })
+        .catch(() => toast.error('Something went wrong!'));
       //   .finally(() => setIsLoading(false))
     }
 
-    if (variant === "LOGIN") {
+    if (variant === 'LOGIN') {
       //   signIn('credentials', {
       //     ...data,
       //     redirect: false
@@ -113,7 +115,7 @@ const AuthForm = () => {
         "
       >
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {variant === "REGISTER" && (
+          {variant === 'REGISTER' && (
             <Input
               disabled={isLoading}
               register={register}
@@ -143,7 +145,7 @@ const AuthForm = () => {
           />
           <div>
             <Button disabled={isLoading} fullWidth type="submit">
-              {variant === "LOGIN" ? "Sign in" : "Register"}
+              {variant === 'LOGIN' ? 'Sign in' : 'Register'}
             </Button>
           </div>
         </form>
@@ -170,11 +172,11 @@ const AuthForm = () => {
           <div className="mt-6 flex gap-2">
             <AuthSocialButton
               icon={BsGithub}
-              onClick={() => socialAction("github")}
+              onClick={() => socialAction('github')}
             />
             <AuthSocialButton
               icon={BsGoogle}
-              onClick={() => socialAction("google")}
+              onClick={() => socialAction('google')}
             />
           </div>
         </div>
@@ -190,12 +192,12 @@ const AuthForm = () => {
           "
         >
           <div>
-            {variant === "LOGIN"
-              ? "New to Messenger?"
-              : "Already have an account?"}
+            {variant === 'LOGIN'
+              ? 'New to Messenger?'
+              : 'Already have an account?'}
           </div>
           <div onClick={toggleVariant} className="underline cursor-pointer">
-            {variant === "LOGIN" ? "Create an account" : "Login"}
+            {variant === 'LOGIN' ? 'Create an account' : 'Login'}
           </div>
         </div>
       </div>
