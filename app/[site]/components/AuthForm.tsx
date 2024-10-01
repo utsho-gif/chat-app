@@ -1,11 +1,11 @@
 'use client';
 
-// import { signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
-// import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 import Button from '@/app/components/Button';
 import Input from '../../components/inputs/input';
@@ -17,7 +17,7 @@ type Variant = 'LOGIN' | 'REGISTER';
 
 const AuthForm = () => {
   //   const session = useSession();
-  //   const router = useRouter();
+  const router = useRouter();
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,36 +70,36 @@ const AuthForm = () => {
     }
 
     if (variant === 'LOGIN') {
-      //   signIn('credentials', {
-      //     ...data,
-      //     redirect: false
-      //   })
-      //   .then((callback) => {
-      //     if (callback?.error) {
-      //       toast.error('Invalid credentials!');
-      //     }
-      //     if (callback?.ok) {
-      //       router.push('/conversations')
-      //     }
-      //   })
-      //   .finally(() => setIsLoading(false))
+      signIn('credentials', {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error('Invalid credentials!');
+          }
+          if (callback?.ok) {
+            router.push('/conversations');
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   const socialAction = (action: string) => {
     setIsLoading(true);
 
-    // signIn(action, { redirect: false })
-    //   .then((callback) => {
-    //     if (callback?.error) {
-    //       toast.error('Invalid credentials!');
-    //     }
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Invalid credentials!');
+        }
 
-    //     if (callback?.ok) {
-    //       router.push('/conversations')
-    //     }
-    //   })
-    //   .finally(() => setIsLoading(false));
+        if (callback?.ok) {
+          router.push('/conversations');
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

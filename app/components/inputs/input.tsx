@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import clsx from "clsx";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import clsx from 'clsx';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface InputProps {
   label: string;
@@ -19,7 +19,7 @@ const Input: React.FC<InputProps> = ({
   register,
   required,
   errors,
-  type = "text",
+  type = 'text',
   disabled,
 }) => {
   return (
@@ -62,8 +62,8 @@ const Input: React.FC<InputProps> = ({
             focus:ring-sky-600 
             sm:text-sm 
             sm:leading-6`,
-            errors[id] && "focus:ring-rose-500",
-            disabled && "opacity-50 cursor-default"
+            errors[id] && 'focus:ring-rose-500',
+            disabled && 'opacity-50 cursor-default'
           )}
         />
       </div>
